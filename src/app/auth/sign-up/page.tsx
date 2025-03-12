@@ -1,11 +1,11 @@
 import React from "react";
-import SignInForm from "../components/sign-in-form";
+import RegisterForm from "../components/register-form";
 
 function SignInPage() {
   return (
     <div className="container mx-auto">
       <div className="w-full h-screen flex flex-col justify-center items-center gap-y-6 md:px-16 px-8">
-        <SignInForm />
+        <RegisterForm />
       </div>
     </div>
   );

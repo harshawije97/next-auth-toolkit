@@ -19,6 +19,7 @@ interface CardWrapperProps {
   backButtonLabel: string;
   backButtonLink: string;
   isSocial?: boolean;
+  isRegister?: boolean;
 }
 
 function CardWrapper({
@@ -27,13 +28,14 @@ function CardWrapper({
   backButtonLabel,
   backButtonLink,
   isSocial,
+  isRegister,
 }: CardWrapperProps) {
   return (
     <Card className="min-w-[320px] md:w-[500px] space-y-4">
       <CardHeader className="w-full flex flex-row justify-between items-start space-y-0">
         <div className="w-full flex flex-col justify-center items-center">
           <CardTitle className="text-3xl">{headerLabel}</CardTitle>
-          <p>Welcome back 👋</p>
+          <p>{isRegister ? "Welcome new user 👋" : "Welcome back 👋"}</p>
         </div>
         <Button variant={"ghost"} className="m-0">
           <HelpCircle className="h-6 w-6 text-slate-400" />
