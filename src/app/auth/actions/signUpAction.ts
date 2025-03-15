@@ -3,7 +3,8 @@
 import * as z from "zod";
 import { RegisterSchema } from "../utils/validationSchema";
 import bcrypt from "bcrypt";
-import { db } from "@/db/db";
+import { findUserByEmailAsync } from "../query/findUserByEmailAsync";
+import { createNewUserAsync } from "../query/createNewUserAsync";
 
 export const signUpAction = async (values: z.infer<typeof RegisterSchema>) => {
     const validateFields = RegisterSchema.safeParse(values);
@@ -16,19 +17,16 @@ export const signUpAction = async (values: z.infer<typeof RegisterSchema>) => {
     // hash password
     const hashPassword = await bcrypt.hash(password, 10);
     // check if the email already exists
-    const user = await db.user.findUnique({ where: { email } });
+    const user = await findUserByEmailAsync(email);
     if (user) {
         return { error: "Email already exists!" };
     }
 
     // create user
-    await db.user.create({
-        data: {
-            name,
-            email,
-            password: hashPassword,
-        },
-    });
+    const response = await createNewUserAsync({ name, email, password: hashPassword });
+    if (response.error) {
+        return { error: response.error };
+    }
 
     // TODO: send verification email
 

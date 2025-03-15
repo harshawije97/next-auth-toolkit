@@ -1,5 +1,6 @@
 "use client";
 
+import { SessionProvider } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -43,7 +44,11 @@ function CardWrapper({
       </CardHeader>
       <CardContent>{children}</CardContent>
       <CardFooter className="w-full flex flex-col gap-y-4 items-center">
-        {isSocial && <SocialLogins />}
+        {isSocial && (
+          <SessionProvider>
+            <SocialLogins />
+          </SessionProvider>
+        )}
         <Link
           href={backButtonLink}
           className="gap-x-2 flex items-center hover:underline text-sm mt-3"
